@@ -64,6 +64,13 @@ void main() {
     );
   });
 
+  test('localNow honors an externally provided UTC instant', () {
+    final DateTime local = VendemeTime.instance.localNow(
+      utcNow: DateTime.utc(2026, 4, 15, 12),
+    );
+    expect(local, DateTime.utc(2026, 4, 15, 8));
+  });
+
   test('applies UTC-4 during Chile winter 2026', () {
     final DateTime winter2026 = DateTime.utc(2026, 4, 15, 12);
     expect(

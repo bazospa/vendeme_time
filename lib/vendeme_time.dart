@@ -110,6 +110,16 @@ class VendemeTime {
     return skeletonUtc.subtract(zone.fallbackOffset);
   }
 
+  /// Returns the current local time using the configured zone rules.
+  ///
+  /// By default it reads the device clock via `DateTime.now()`. If your app
+  /// already has a trusted UTC source (e.g. NTP via `FlutterKronosPlus`), pass
+  /// it through [utcNow] so the conversion uses it instead of the system clock.
+  DateTime localNow({DateTime? utcNow, String? zoneId}) {
+    final DateTime utc = (utcNow ?? DateTime.now()).toUtc();
+    return convertUtcToLocal(utc, zoneId: zoneId);
+  }
+
   /// Returns the offset used for the given instant.
   Duration offsetFor(DateTime utc, {String? zoneId}) {
     if (!utc.isUtc) {
