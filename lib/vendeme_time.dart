@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 
+import 'src/chile_rule.dart';
+export 'src/chile_rule.dart' show buildChileTimeZone;
+
 /// Central entry point for vendeme time zone overrides.
 ///
 /// This class keeps a simple in-memory time zone database so that devices with
@@ -267,29 +270,8 @@ class TimeZoneNotFoundException implements Exception {
   String toString() => 'TimeZoneNotFoundException: $message';
 }
 
-/// Chilean time zone configuration updated with 2024/2025 transitions.
-const Map<String, dynamic> kVendemeChileTimeZone = <String, dynamic>{
-  'id': 'America/Santiago',
-  'fallbackMinutes': -180,
-  'periods': <Map<String, dynamic>>[
-    <String, dynamic>{
-      'start': '2024-04-07T04:00:00Z',
-      'end': '2024-09-08T03:00:00Z',
-      'offsetMinutes': -240,
-    },
-    <String, dynamic>{
-      'start': '2024-09-08T03:00:00Z',
-      'end': '2025-04-06T03:00:00Z',
-      'offsetMinutes': -180,
-    },
-    <String, dynamic>{
-      'start': '2025-04-06T03:00:00Z',
-      'end': '2025-09-07T04:00:00Z',
-      'offsetMinutes': -240,
-    },
-    <String, dynamic>{'start': '2025-09-07T04:00:00Z', 'offsetMinutes': -180},
-  ],
-};
+/// Chilean time zone configuration generated from the IANA rule.
+final Map<String, dynamic> kVendemeChileTimeZone = buildChileTimeZone();
 
 /// Asset path for the packaged Chilean time zone definition.
 const String kVendemeChileTimeZoneAsset =

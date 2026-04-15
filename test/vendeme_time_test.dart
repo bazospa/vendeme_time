@@ -64,6 +64,22 @@ void main() {
     );
   });
 
+  test('applies UTC-4 during Chile winter 2026', () {
+    final DateTime winter2026 = DateTime.utc(2026, 4, 15, 12);
+    expect(
+      VendemeTime.instance.convertUtcToLocal(winter2026),
+      DateTime.utc(2026, 4, 15, 8),
+    );
+  });
+
+  test('applies UTC-3 during Chile summer 2027', () {
+    final DateTime summer2027 = DateTime.utc(2027, 1, 15, 12);
+    expect(
+      VendemeTime.instance.convertUtcToLocal(summer2027),
+      DateTime.utc(2027, 1, 15, 9),
+    );
+  });
+
   test('registers zones from packaged asset', () async {
     VendemeTime.instance.reset();
     await initializeVendemeTime();
