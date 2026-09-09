@@ -1,0 +1,29 @@
+name: Tests
+
+# Único punto de entrada del gate de tests. Corre el árbol COMPLETO de `test/`:
+# sin `--name`, sin `--plain-name`, sin `--tags` y sin rutas sueltas. Si un test
+# no puede correr en CI se marca con `@Skip('razón')` en el archivo, nunca
+# escondiéndolo detrás de un filtro acá.
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  test:
+    name: flutter test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.7"
+          channel: "stable"
+
+      - name: Dependencias
+        run: flutter pub get
+
+      - name: Tests
+        run: flutter test
